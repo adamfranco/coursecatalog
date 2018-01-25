@@ -488,6 +488,7 @@ class ArchiveController
 		$courseDescriptionHash = sha1($course->getDescription());
 		$allCourseInstructors = array();
 		$allSectionDescriptions = array();
+		$allSectionRequirementTopics = array();
 
 		$instructorsType = new phpkit_type_URNInetType('urn:inet:middlebury.edu:record:instructors');
 		$identifiersType = new phpkit_type_URNInetType('urn:inet:middlebury.edu:record:banner_identifiers');
@@ -544,6 +545,7 @@ class ArchiveController
 				$topic = $topics->getNextTopic();
 				$topicIdString = $this->_helper->osidId->toString($topic->getId());
 				if ($requirementType->isEqual($topic->getGenusType())) {
+					$allSectionRequirementTopics[] = $topic;
 					if (!isset($sectionData[$termIdString]['sections'][$sectionDescriptionHash]['requirements'][$topicIdString])) {
 						$sectionData[$termIdString]['sections'][$sectionDescriptionHash]['requirements'][$topicIdString] = [
 							'label' => $topic->getDisplayName(),
@@ -592,6 +594,7 @@ class ArchiveController
 		$topicType = new phpkit_type_URNInetType("urn:inet:middlebury.edu:genera:topic/requirement");
 		$topicTypeString = $this->_helper->osidType->toString($topicType);
 		$topics = $this->_helper->topics->filterTopicsByType($allTopics, $topicType);
+		$topics = $this->_helper->topics->sortUnique(array_merge($topics, $allSectionRequirementTopics));
 		foreach ($topics as $topic) {
 			$req = [
 				'label' => $topic->getDisplayName(),

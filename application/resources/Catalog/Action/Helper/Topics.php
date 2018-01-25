@@ -47,4 +47,20 @@ class Catalog_Action_Helper_Topics
 		return $matching;
 	}
 
+	/**
+	 * Return an array with unique topics.
+	 *
+	 * @param array $topics
+	 * @return array
+	 */
+	public function sortUnique(array $topics) {
+		$idHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('OsidId');
+		$unique = array();
+		foreach($topics as $topic) {
+			$unique[$idHelper->toString($topic->getId())] = $topic;
+		}
+		ksort($unique);
+		return array_values($unique);
+	}
+
 }
