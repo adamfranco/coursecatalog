@@ -129,8 +129,9 @@ class CatalogSync_Director
 			}
 			$to = implode(", ", $error_mail_to);
 		}
-		$subject = "COURSE CATALOG: Synchonization Exception";
-		$message = "The following errors occurred during database synchronization:\n\n";
+		$host = trim(shell_exec('hostname'));
+		$subject = "$host - COURSE CATALOG: Synchonization Exception";
+		$message = "The following errors occurred during database synchronization on $host:\n\n";
 		$message .= $e->getMessage() . "\n\n";
 		$message .= $e->getTraceAsString() . "\n\n";
 
