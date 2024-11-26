@@ -31,11 +31,11 @@ class banner_course_Term_Lookup_CombinedSessionTest extends phpkit_test_phpunit_
      */
     protected function setUp(): void
     {
-        $this->mcugId = new phpkit_id_URNInetId('urn:inet:middlebury.edu:catalog/MCUG');
+        $this->mcugId = new phpkit_id_URNInetId('urn:inet:middlebury.edu:catalog.MCUG');
         $this->unknownId = new phpkit_id_URNInetId('urn:inet:middlebury.edu:unknown_id');
-        $this->termId = new phpkit_id_URNInetId('urn:inet:middlebury.edu:term/200890');
-        $this->springTermId = new phpkit_id_URNInetId('urn:inet:middlebury.edu:term/200920');
-        $this->badTermId = new phpkit_id_URNInetId('urn:inet:middlebury.edu:term/200866');
+        $this->termId = new phpkit_id_URNInetId('urn:inet:middlebury.edu:term.200890');
+        $this->springTermId = new phpkit_id_URNInetId('urn:inet:middlebury.edu:term.200920');
+        $this->badTermId = new phpkit_id_URNInetId('urn:inet:middlebury.edu:term.200866');
 
         $this->session = self::$courseManager->getTermLookupSession();
         $this->session->useComparativeView();
@@ -196,7 +196,7 @@ class banner_course_Term_Lookup_CombinedSessionTest extends phpkit_test_phpunit_
     {
         $terms = $this->session->getTerms();
         $this->assertInstanceOf('osid_course_TermList', $terms);
-        $this->assertEquals(14, $terms->available());
+        $this->assertEquals(16, $terms->available());
         $this->assertInstanceOf('osid_course_Term', $terms->getNextTerm());
         $this->assertInstanceOf('osid_course_Term', $terms->getNextTerm());
     }
